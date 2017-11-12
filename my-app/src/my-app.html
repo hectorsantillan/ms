@@ -8,170 +8,294 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="my-icons.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="lazy-import" href="my-dashboard.html">
+<link rel="lazy-import" href="my-map.html">
+<link rel="lazy-import" href="my-view404.html">
+
 
 <dom-module id="my-app">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
+        --app-primary-color: #FFFFFF;
+        --app-secondary-color: #000000;
 
         display: block;
       }
 
       app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
-      }      
+      }
 
       app-header {
-        color: #fff;
+        color: #000000;
         background-color: var(--app-primary-color);
       }
+
+
       app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
+        --paper-icon-button-ink-color: #000000;
       }
 
       .drawer-list {
-        margin: 0 20px;
+        margin: 16px;
       }
 
       .drawer-list a {
         display: block;
-        padding: 0 16px;
+        /* padding: 0 16px; */
         text-decoration: none;
         color: var(--app-secondary-color);
-        line-height: 40px;
+        /* line-height: 40px; */
       }
 
-      .drawer-list a.iron-selected {
+      .drawer-list a:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      /* .drawer-list a.iron-selected {
         color: black;
         font-weight: bold;
+      } */
+
+      app-drawer-layout {
+        --app-drawer-layout-content-transition: margin 0.2s;
+      }
+
+      app-drawer {
+        --app-drawer-content-container: {
+          background-color: #F4F5F6;
+        }
+      }
+
+      .drawer-content {
+        margin-top: 80px;
+        height: calc(100% - 80px);
+        overflow: auto;
+      }
+
+      .iron-selected .menuSelected {
+        color: #673AB7;
+        font-weight: bold;
+      }
+
+      .header-div {
+        box-shadow: 0px 5px 2px -3px rgba(0, 0, 0, 0.05);
+      }
+
+      .avatar {
+        height: 40px;
+        width: 40px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        background-color: #DDD;
+      }
+
+      .pad {
+        padding: 0 16px;
+        @apply --layout-flex;
+        @apply --layout-vertical;
+      }
+
+      .primary {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .shortText,
+      .longText {
+        font-size: 14px;
+      }
+
+      .longText {
+        color: gray;
+        display: none;
+      }
+
+      paper-fab {
+        position: fixed;
+        right: 16px;
+        bottom: -20px;
+      }
+
+      .divHeaderLabelLocation {
+        /* padding: 0 16px 8px; */
+        font-size: 14px;
+        color: rgb(56, 56, 56);
+        @apply --layout-flex;
+        @apply --layout-vertical;
       }
     </style>
 
-    <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
-    <app-route
-        route="{{route}}"
-        pattern="[[rootPath]]:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
+    </app-location>
 
-    <!-- <app-drawer-layout fullbleed narrow="{{narrow}}"> -->
-      <!-- Drawer content -->
-      <!-- <app-drawer id="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">View One</a>
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
-        </iron-selector>
-      </app-drawer> -->
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
+    </app-route>
 
-      <!-- Main content -->
-      <!-- <app-header-layout has-scrolling-region>
+    <app-drawer-layout fullbleed narrow="{{narrow}}" id="drawerLayout">
+      <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+        <div style="height: 100%; overflow: auto;">
+          <app-header fixed>
+            <app-toolbar>
+              <iron-image class="avatar" sizing="contain" src=""></iron-image>
+              <div class="pad">
+                <div class="primary">Mr. Liz Grimes</div>
+                <div class="shortText">Sales Agent</div>
+                <div class="longText"></div>
+              </div>
+            </app-toolbar>
 
-        <app-header condenses reveals effects="waterfall">
-          <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
+            <!-- <app-toolbar>
+            <div class="divHeaderLabelLocation">Location: (not set)</div>
           </app-toolbar>
-        </app-header>
+          <paper-fab mini icon="my-icons:my-location"></paper-fab> -->
+          </app-header>
 
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
-        </iron-pages>
-      </app-header-layout>
-    </app-drawer-layout> -->
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+            <a name="dashboard" href="[[rootPath]]">
+              <paper-icon-item toggles="true" class="menuSelected">
+                <iron-icon icon="my-icons:dashboard" slot="item-icon"></iron-icon>
+                <span>Dashboard</span>
+              </paper-icon-item>
+            </a>
 
-    <app-drawer-layout fullbleed narrow="{{narrow}}">
-    <!-- Drawer content -->
-    <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">View One</a>          
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
-        </iron-selector>
+            <a name="map" href="[[rootPath]]map">
+              <paper-icon-item toggles="true" class="menuSelected">
+                <iron-icon icon="my-icons:map" slot="item-icon"></iron-icon>
+                <span>Map</span>
+              </paper-icon-item>
+            </a>
+
+          </iron-selector>
+
+        </div>
       </app-drawer>
 
-    <!-- Main content -->
-    <app-header-layout has-scrolling-region>
+      <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+        <my-dashboard name="dashboard"></my-dashboard>
+        <my-map name="map"></my-map>
+        <my-view404 name="view404"></my-view404>
+      </iron-pages>
 
-        <app-header slot="header" condenses reveals effects="waterfall">
-          <app-toolbar>
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title>My App</div>
-          </app-toolbar>
-        </app-header>
-
-        <iron-pages
-            selected="[[page]]"
-            attr-for-selected="name"
-            fallback-selection="view404"
-            role="main">
-          <my-view1 name="view1"></my-view1>            
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view404 name="view404"></my-view404>
-        </iron-pages>
-      </app-header-layout>
     </app-drawer-layout>
-    
+
   </template>
 
   <script>
-    Polymer({
-      is: 'my-app',
+    class MyApp extends Polymer.Element {
+      static get is() { return 'my-app'; }
 
-      properties: {
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged',
-        },
-      },
+      static get properties() {
+        return {
+          page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged',
+          },
+          routeData: Object,
+          subroute: String,
+          // This shouldn't be neccessary, but the Analyzer isn't picking up
+          // Polymer.Element#rootPath
+          rootPath: String,
+          headerSearchBarIsHidden: {
+            type: Boolean,
+            value: true
+          },
+          narrow: {
+            type: Boolean,
+            notify: true
+          }
+        };
+      }
 
-      observers: [
-        '_routePageChanged(routeData.page)',
-      ],
+      static get observers() {
+        return [
+          '_routePageChanged(routeData.page)',
+        ];
+      }
 
-      _routePageChanged: function(page) {
-        this.page = page || 'view1';
+      _routePageChanged(page) {
+        // If no page was found in the route data, page will be an empty string.
+        // Default to 'view1' in that case.
+        this.page = page || 'dashboard';
 
+        // Close a non-persistent drawer when the page & route are changed.
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
         }
-      },
+      }
 
-      _pageChanged: function(page) {
+      _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
-        this.importHref(resolvedPageUrl, null, this._showPage404, true);
-      },
+        Polymer.importHref(
+          resolvedPageUrl,
+          null,
+          this._showPage404.bind(this),
+          true);
 
-      _showPage404: function() {
+      }
+
+      _showPage404() {
         this.page = 'view404';
-      },
-    });
+      }
+
+      toggleMenu() {
+        if (this.$.drawerLayout.forceNarrow || !this.$.drawerLayout.narrow) {
+          this.$.drawerLayout.forceNarrow = !this.$.drawerLayout.forceNarrow;
+        } else {
+          this.$.drawerLayout.drawer.toggle();
+        }
+      }
+
+      toggleSearch() {
+        this.headerSearchBarIsHidden = !this.headerSearchBarIsHidden
+
+        if (this.headerSearchBarIsHidden == false) {
+          this.$.searchBox.focus();
+        }
+      }
+
+
+      ready() {
+        super.ready();
+        this.addEventListener('toggleDrawer', (e) => this._onChangeSection(e));
+        // this.addEventListener('on-tap', (e) => this._onChangeSection(e));
+      }
+
+      _onChangeSection(e) {
+        if (this.$.drawerLayout.forceNarrow || !this.$.drawerLayout.narrow) {
+          this.$.drawerLayout.forceNarrow = !this.$.drawerLayout.forceNarrow;
+        } else {
+          this.$.drawerLayout.drawer.toggle();
+        }
+        // alert(`thing count is ${this.narrow}`);
+      }
+
+
+    }
+
+    window.customElements.define(MyApp.is, MyApp);
   </script>
 </dom-module>

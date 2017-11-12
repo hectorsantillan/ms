@@ -1,0 +1,109 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="my-icons.html">
+
+<dom-module id="my-rightdrawer">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                right: 0;
+                left: auto;
+                -webkit-transform: translate3d(100%, 0, 0);
+                transform: translate3d(100%, 0, 0);
+
+                position: absolute;
+                float: left;
+
+                /* padding: 10px; */
+            }
+
+            paper-icon-button.menu {
+                margin-right: 16px;
+            }
+
+            .main-container {
+                width: 340px;
+            }
+
+            app-header {
+                color: rgb(255, 255, 255);
+                background-color: rgb(169, 58, 183);
+            }
+        </style>
+
+
+        <!-- <app-drawer align="right" slot="drawer"> -->
+        <div class="main-container">
+            <app-header-layout fullbleed has-scrolling-region>
+                <app-header fixed slot="header">
+                    <app-toolbar primary>
+                        <paper-icon-button class="menu" icon="my-icons:close" on-tap="closeDrawer"></paper-icon-button>
+                        <div main-title>[[blocklot]]</div>
+                        <paper-icon-button icon="my-icons:arrow-back" on-tap="toggleDrawer"></paper-icon-button>
+                    </app-toolbar>
+                </app-header>
+
+                <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
+                    <a name="dashboard" href="[[rootPath]]">
+                        <paper-icon-item toggles="true" class="menuSelected">
+                            <span>[[blocklot]]</span>
+                        </paper-icon-item>
+                    </a>
+
+                    <a name="map" href="[[rootPath]]map">
+                        <paper-icon-item toggles="true" class="menuSelected">
+                            <span>Step 2</span>
+                        </paper-icon-item>
+                    </a>
+
+                </iron-selector>
+
+
+
+            </app-header-layout>
+
+        </div>
+        <!-- </app-drawer> -->
+
+        <!-- <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+              <my-dashboard name="dashboard"></my-dashboard>
+              <my-view2 name="view2"></my-view2>
+              <my-view3 name="view3"></my-view3>
+              <my-patients narrow="{{narrow}}" name="patients"></my-patients>
+              <my-view404 name="view404"></my-view404>
+            </iron-pages>           -->
+
+
+
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'my-rightdrawer',
+
+            properties: {
+                blocklot: String
+            },
+
+            closeDrawer(e) {
+                // this.remove();
+                console.log(e);
+            }
+
+        })
+
+
+    </script>
+</dom-module>

@@ -1,6 +1,6 @@
-# Polymer App Toolbox - Starter Kit with custom build
+# Polymer App Toolbox - Starter Kit
 
-[![Build Status](https://travis-ci.org/PolymerElements/generator-polymer-init-custom-build.svg?branch=master)](https://travis-ci.org/PolymerElements/generator-polymer-init-custom-build)
+[![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
 
 This template is a starting point for building apps using a drawer-based
 layout. The layout is provided by `app-layout` elements.
@@ -18,19 +18,28 @@ The PRPL pattern, in a nutshell:
 * **Pre-cache** components for remaining routes
 * **Lazy-load** and progressively upgrade next routes on-demand
 
-Also have a custom gulp process leveraging [polymer-build](https://github.com/Polymer/polymer-build),
-the library powering [Polymer CLI](https://github.com/Polymer/polymer-cli).
+### Migrating from Polymer Starter Kit v1?
+
+[Check out our blog post that covers what's changed in PSK2 and how to migrate!](https://www.polymer-project.org/1.0/blog/2016-08-18-polymer-starter-kit-or-polymer-cli.html)
+
+### Quickstart
+
+We've recorded a Polycast to get you up and running with PSK2 fast!
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=HgJ0XCyBwzY&list=PLNYkxOF6rcIDdS7HWIC_BYRunV6MHs5xo&index=10">
+    <img src="https://img.youtube.com/vi/HgJ0XCyBwzY/0.jpg" alt="Polymer Starter Kit 2 video">
+  </a>
+</p>
 
 ### Setup
 
 ##### Prerequisites
 
-First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) and
-generator-polymer-init-custom-build using [npm](https://www.npmjs.com) (we
-assume you have pre-installed [node.js](https://nodejs.org)).
+First, install [Polymer CLI](https://github.com/Polymer/polymer-cli) using
+[npm](https://www.npmjs.com) (we assume you have pre-installed [node.js](https://nodejs.org)).
 
     npm install -g polymer-cli
-    npm install -g generator-polymer-init-custom-build
 
 Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
@@ -40,7 +49,7 @@ Second, install [Bower](https://bower.io/) using [npm](https://www.npmjs.com)
 
     mkdir my-app
     cd my-app
-    polymer init polymer-starter-kit-custom-build
+    polymer init polymer-2-starter-kit
 
 ### Start the development server
 
@@ -51,22 +60,46 @@ routing for the app:
 
 ### Build
 
-The included `gulpfile.js` relies on [the `polymer-build` library](https://github.com/Polymer/polymer-build),
-the same library that powers Polymer CLI. Out of the box it will clean the
-`build` directory, and provide image minification. Follow the comments in the
-`gulpfile.js` to add additional steps like JS transpilers or CSS preprocessors.
+The `polymer build` command builds your Polymer application for production, using build configuration options provided by the command line or in your project's `polymer.json` file.  
 
-`gulpfile.js` also generates a `service-worker.js` file with code to pre-cache
-the dependencies based on the entrypoint and fragments specified in
-`polymer.json`.
+You can configure your `polymer.json` file to create multiple builds. This is necessary if you will be serving different builds optimized for different browsers. You can define your own named builds, or use presets. See the documentation on [building your project for production](https://www.polymer-project.org/2.0/toolbox/build-for-production) for more information.
 
-    npm run build
+The Polymer Starter Kit is configured to create three builds using [the three supported presets](https://www.polymer-project.org/2.0/toolbox/build-for-production#build-presets):
+
+```
+"builds": [
+  {
+    "preset": "es5-bundled"
+  },
+  {
+    "preset": "es6-bundled"
+  },
+  {
+    "preset": "es6-unbundled"
+  }
+]
+```
+
+Builds will be output to a subdirectory under the `build/` directory as follows:
+
+```
+build/
+  es5-bundled/
+  es6-bundled/
+  es6-unbundled/
+```
+
+* `es5-bundled` is a bundled, minified build with a service worker. ES6 code is compiled to ES5 for compatibility with older browsers.
+* `es6-bundled` is a bundled, minified build with a service worker. ES6 code is served as-is. This build is for browsers that can handle ES6 code - see [building your project for production](https://www.polymer-project.org/2.0/toolbox/build-for-production#compiling) for a list.
+* `es6-unbundled` is an unbundled, minified build with a service worker. ES6 code is served as-is. This build is for browsers that support HTTP/2 push.
+
+Run `polymer help build` for the full list of available options and optimizations. Also, see the documentation on the [polymer.json specification](https://www.polymer-project.org/2.0/docs/tools/polymer-json) and [building your Polymer application for production](https://www.polymer-project.org/2.0/toolbox/build-for-production).
 
 ### Preview the build
 
-This command serves your app.
+This command serves your app. Replace `build-folder-name` with the folder name of the build you want to serve.
 
-    polymer serve build/
+    polymer serve build/build-folder-name/
 
 ### Run tests
 
@@ -81,12 +114,6 @@ If running Windows you will need to set the following environment variables:
 - LAUNCHPAD_CHROME
 
 Read More here [daffl/launchpad](https://github.com/daffl/launchpad#environment-variables-impacting-local-browsers-detection)
-
-### Adding a new build step
-
-The `gulpfile.js` already contains an example build step that demonstrates how
-to run image minification across your source files. For more examples, refer to
-the section in [the polymer-build README on extracting inline sources](https://github.com/Polymer/polymer-build#extracting-inlined-cssjs).
 
 ### Adding a new view
 
