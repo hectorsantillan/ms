@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="my-icons.html">
 
@@ -23,8 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 transform: translate3d(100%, 0, 0);
 
                 position: absolute;
-                float: left;
-
+                /* float: left; */
                 /* padding: 10px; */
             }
 
@@ -34,27 +34,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             .main-container {
                 width: 340px;
+                padding-bottom: 64px;
             }
 
             app-header {
                 color: rgb(255, 255, 255);
                 background-color: rgb(169, 58, 183);
             }
+
+            .lot-details {
+                /* color: black; */
+                padding: 24px;
+                padding-top: 88px;
+            }
+
+            .lot-details2 {
+                /* color: black; */
+                padding: 24px;
+            }
         </style>
 
 
         <!-- <app-drawer align="right" slot="drawer"> -->
         <div class="main-container">
-            <app-header-layout fullbleed has-scrolling-region>
+            <app-header-layout has-scrolling-region>
                 <app-header fixed slot="header">
-                    <app-toolbar primary>
+                    <app-toolbar>
                         <paper-icon-button class="menu" icon="my-icons:close" on-tap="closeDrawer"></paper-icon-button>
                         <div main-title>[[blocklot]]</div>
-                        <paper-icon-button icon="my-icons:arrow-back" on-tap="toggleDrawer"></paper-icon-button>
+                        <paper-icon-button icon="my-icons:more-vert" on-tap="toggleDrawer"></paper-icon-button>
                     </app-toolbar>
+
                 </app-header>
 
-                <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
+                <!-- <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
                     <a name="dashboard" href="[[rootPath]]">
                         <paper-icon-item toggles="true" class="menuSelected">
                             <span>[[blocklot]]</span>
@@ -67,23 +80,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </paper-icon-item>
                     </a>
 
-                </iron-selector>
+                </iron-selector> -->
 
 
 
             </app-header-layout>
 
+
+            <template is="dom-if" if="{{isReserved(aboutthelot2.lotstatus)}}">
+                <div class="lot-details">
+                    Status:
+                    <font color="red">[[aboutthelot2.lotstatus]]</font>
+                    </br>
+                    Lot Area: [[aboutthelot2.lotarea]]
+                </div>
+                <div class="card">
+                    Reservation Ref.: [[aboutthelot2.reservation.refcode]]</br>
+                    Customer: [[aboutthelot2.reservation.customer]]</br>
+                    Agent: [[aboutthelot2.reservation.agent]]</br>
+                    Reserved: [[aboutthelot2.reservation.datereserved]]</br>
+                    Expiry: [[aboutthelot2.reservation.expiry]]
+                </div>
+                <div class="lot-details2">
+                    <a href="">Cancel Reservation</a>
+                    </br>
+                    <a href="">Proceed to Booking</a>
+                </div>
+
+            </template>
+
+            <template is="dom-if" if="{{isOnHold(aboutthelot2.lotstatus)}}">
+                <div class="lot-details">
+                    Status:
+                    <font color="gray">[[aboutthelot2.lotstatus]]</font>
+                    </br>
+                    Lot Area: [[aboutthelot2.lotarea]]
+                </div>
+                <div class="card">
+                    On-Hold Ref.: [[aboutthelot2.reservation.refcode]]</br>
+                    Customer: [[aboutthelot2.reservation.customer]]</br>
+                    Agent: [[aboutthelot2.reservation.agent]]</br>
+                    Reserved: [[aboutthelot2.reservation.datereserved]]</br>
+                    Expiry: [[aboutthelot2.reservation.expiry]]
+                </div>
+                <div class="lot-details2">
+                    <a href="">Proceed to Reservation</a>
+                </div>
+
+            </template>
+
+            <template is="dom-if" if="{{isAvailable(aboutthelot2.lotstatus)}}">
+                    <div class="lot-details">
+                        Status:
+                        <font color="green">[[aboutthelot2.lotstatus]]</font>
+                        </br>
+                        Lot Area: [[aboutthelot2.lotarea]]
+                    </div>
+                    <div class="lot-details2">
+                        <a href="/application">Request to Hold</a></br>
+                        <a href="">Process Reservation</a>
+                    </div>
+    
+                </template>            
+
+
         </div>
-        <!-- </app-drawer> -->
-
-        <!-- <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
-              <my-dashboard name="dashboard"></my-dashboard>
-              <my-view2 name="view2"></my-view2>
-              <my-view3 name="view3"></my-view3>
-              <my-patients narrow="{{narrow}}" name="patients"></my-patients>
-              <my-view404 name="view404"></my-view404>
-            </iron-pages>           -->
-
 
 
 
@@ -94,12 +155,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             is: 'my-rightdrawer',
 
             properties: {
-                blocklot: String
+                blocklot: String,
+                aboutthelot2: Object,
             },
 
             closeDrawer(e) {
-                // this.remove();
-                console.log(e);
+                this.dispatchEvent(new CustomEvent('closeDrawer', {
+                    bubbles: true, composed: true, detail: {}
+                }));
+            },
+            isReserved(lotstatus) {
+                return lotstatus === 'Reserved';
+            },
+            isOnHold(lotstatus) {
+                return lotstatus === 'On-Hold';
+            },
+            isAvailable(lotstatus) {
+                return lotstatus === 'Available';
             }
 
         })

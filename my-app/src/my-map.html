@@ -47,7 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <app-drawer-layout fullbleed style="width: 100%;" Id="my-map-main-adl">
-      <app-header-layout fullbleed has-scrolling-region class="flex">
+      <app-header-layout fullbleed has-scrolling-region>
         <app-header fixed slot="header">
           <app-toolbar primary>
             <paper-icon-button class="menu" icon="my-icons:menu" on-tap="toggleDrawer"></paper-icon-button>
@@ -117,9 +117,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <google-map-point longitude="123.9993744" latitude="10.3006374"></google-map-point>
           </google-map-poly>
 
-          <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="green"
+          <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="red"
             fill-opacity="1" clickable="true" click-events="true" on-google-map-poly-click="polyClicked" mouse-events="true"
-            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 1">
+            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 1" aboutthelot='{"lotstatus":"Reserved","lotarea":"9m²","reservation":{"refcode":"00001","customer":"Juan Dela Cruz","agent":"Mr. Marc Rizon","datereserved":"Nov. 10, 2017 (3 days ago)","expiry":"Dec. 10, 2017 (27 days later)"}}'>
             <google-map-point longitude="123.999308" latitude="10.3005992"></google-map-point>
             <google-map-point longitude="123.9993026" latitude="10.3005926"></google-map-point>
             <google-map-point longitude="123.999314" latitude="10.300582"></google-map-point>
@@ -127,9 +127,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <google-map-point longitude="123.999308" latitude="10.3005992"></google-map-point>
           </google-map-poly>
 
-          <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="green"
+          <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="gray"
             fill-opacity="1" clickable="true" click-events="true" on-google-map-poly-click="polyClicked" mouse-events="true"
-            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 2">
+            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 2" aboutthelot='{"lotstatus":"On-Hold","lotarea":"9m²","reservation":{"refcode":"H00001","customer":"Juana Dela Cruz","agent":"Mr. Marc Rizon","datereserved":"Nov. 13, 2017 (Just Now)","expiry":"Nov. 14, 2017 (Tomorrow)"}}'>
             <google-map-point longitude="123.9993026" latitude="10.3005926"></google-map-point>
             <google-map-point longitude="123.9992969" latitude="10.3005853"></google-map-point>
             <google-map-point longitude="123.999308" latitude="10.3005754"></google-map-point>
@@ -139,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="green"
             fill-opacity="1" clickable="true" click-events="true" on-google-map-poly-click="polyClicked" mouse-events="true"
-            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 3">
+            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 3" aboutthelot='{"lotstatus":"Available","lotarea":"9m²","reservation":{}}'>
             <google-map-point longitude="123.999308" latitude="10.3005754"></google-map-point>
             <google-map-point longitude="123.9992969" latitude="10.3005853"></google-map-point>
             <google-map-point longitude="123.9992905" latitude="10.3005781"></google-map-point>
@@ -149,7 +149,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="green"
             fill-opacity="1" clickable="true" click-events="true" on-google-map-poly-click="polyClicked" mouse-events="true"
-            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 4">
+            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 4" aboutthelot='{"lotstatus":"Available","lotarea":"9m²","reservation":{}}'>
             <google-map-point longitude="123.9992905" latitude="10.3005781"></google-map-point>
             <google-map-point longitude="123.9992845" latitude="10.3005718"></google-map-point>
             <google-map-point longitude="123.9992956" latitude="10.3005619"></google-map-point>
@@ -159,7 +159,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <google-map-poly closed stroke-color="white" stroke-position="inside" stroke-opacity="1" stroke-weight="1" fill-color="green"
             fill-opacity="1" clickable="true" click-events="true" on-google-map-poly-click="polyClicked" mouse-events="true"
-            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 5">
+            on-google-map-poly-mouseover="polyMouseOver" on-google-map-poly-mouseout="polyMouseOut" data-args="Block 3 - Lawn Lot 5" aboutthelot='{"lotstatus":"Available","lotarea":"9m²","reservation":{}}'>
             <google-map-point longitude="123.9992845" latitude="10.3005718"></google-map-point>
             <google-map-point longitude="123.9992785" latitude="10.3005642"></google-map-point>
             <google-map-point longitude="123.9992892" latitude="10.3005543"></google-map-point>
@@ -204,8 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           narrow: {
             type: Boolean,
             notify: true
-          },
-          blockLotSelected: String
+          }
 
         };
       }
@@ -223,10 +222,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var data_args = Polymer.dom(e).rootTarget.getAttribute("data-args");
         var args = Polymer.dom(this.root).querySelector("#rightdrawer")
 
-        args.setAttribute("style","display: 'block';");
+        args.setAttribute("style","display: block;");
         args.setAttribute("blocklot",data_args);
 
         Polymer.dom(this.root).querySelector("#my-map-main-adl").setAttribute("style","width: calc(100% - 340px);");
+
+
+        var _aboutthelot = Polymer.dom(e).rootTarget.getAttribute("aboutthelot");
+        Polymer.dom(this.root).querySelector("#rightdrawer").setAttribute("aboutthelot2",_aboutthelot);
        
         // console.log(data_args);
         // console.log(args);
@@ -239,6 +242,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       polyMouseOut(e) {
         Polymer.dom(e).rootTarget.setAttribute("stroke-color", "white");
       }
+
+      ready() {
+        super.ready();
+        this.addEventListener('closeDrawer', (e) => this._onCloseDrawer(e));
+        // this.addEventListener('on-tap', (e) => this._onChangeSection(e));
+      }
+
+      _onCloseDrawer(e) {
+        var args = Polymer.dom(this.root).querySelector("#rightdrawer")
+        args.setAttribute("style","display: none;");
+        args.setAttribute("blocklot",'');
+
+        Polymer.dom(this.root).querySelector("#my-map-main-adl").setAttribute("style","width: 100%;");
+      }      
 
     }
 
